@@ -1,0 +1,10 @@
+[project]
+name = "irrationality-proof-builder"
+version = "0.1.0"
+description = "Step by step proofs that the square root of a non-square is irrational"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+dependencies = []
+
+[tool.setuptools.packages.find]
+where = ["src"]

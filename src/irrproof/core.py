@@ -1,6 +1,6 @@
 """Write out a proof that sqrt(n) is irrational when n is not a perfect square.
 
-Method: suppose sqrt(n) = a/b with gcd(a, b) = 1, so a^2 = n b^2. Pick a
+Method: suppose sqrt(n) = a/b with a, b positive whole numbers, so a^2 = n b^2. Pick a
 prime p whose exponent in n is odd. In a^2 every prime has an even exponent.
 In n b^2 the exponent of p is odd + even = odd. Unique factorisation makes
 this impossible, so no such a/b exists.
@@ -35,8 +35,12 @@ def odd_prime(n):
 
 
 def prove(n):
-    if n < 2:
-        raise ValueError("n must be at least 2")
+    if n < 0:
+        raise ValueError(f"{n} is negative, so it has no real square root and there is nothing to prove")
+    if n == 0:
+        raise ValueError("0 = 0^2 is a perfect square, so sqrt(0) = 0 is rational")
+    if n == 1:
+        raise ValueError("1 = 1^2 is a perfect square, so sqrt(1) = 1 is rational")
     p = odd_prime(n)
     if p is None:
         raise ValueError(f"{n} is a perfect square, so sqrt({n}) = {isqrt(n)} is rational")
@@ -45,12 +49,17 @@ def prove(n):
     fac = " x ".join(f"{q}^{k}" if k > 1 else str(q) for q, k in sorted(f.items()))
     return [
         f"Claim: sqrt({n}) is irrational.",
-        f"Suppose sqrt({n}) = a/b, where a and b are whole numbers with no common factor.",
+        f"Suppose sqrt({n}) = a/b, where a and b are positive whole numbers.",
         f"Squaring: a^2 = {n} b^2.",
         f"Factorise {n} = {fac}. The prime {p} appears {e} time(s), an odd number.",
-        f"Every prime appears an even number of times in a^2, because a^2 = a x a.",
-        f"In {n} b^2 the prime {p} appears {e} + (an even number) times, which is odd.",
-        f"One number cannot have {p} an even number of times and an odd number of times.",
+        "Write a = p1^e1 x ... x pk^ek (its prime factorisation). Then a^2 = p1^(2 e1) x ... x pk^(2 ek), "
+        "so every prime in a^2 has an even exponent. The same argument shows every prime in b^2 has an even exponent.",
+        f"On the right side, {n} b^2 has the prime {p} with exponent {e} + (an even number), "
+        "and odd + even is odd. So the exponent of "
+        f"{p} is odd on the right.",
+        f"On the left side, a^2 has the prime {p} with an even exponent (possibly 0).",
+        f"The two sides are the same number, but unique factorisation says a number has exactly one exponent for {p}. "
+        "It cannot be both even and odd. This is a contradiction.",
         f"So no such a and b exist, and sqrt({n}) is irrational.",
     ]
 

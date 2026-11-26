@@ -1,4 +1,6 @@
-# irrationality-proof-builder
+# HIPPASUS: named after the Pythagorean said to have proved root 2 irrational
+
+Formerly `irrationality-proof-builder`.
 
 Writes out a step by step proof that the square root of a non-square whole number is irrational.
 
